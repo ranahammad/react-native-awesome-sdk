@@ -2,13 +2,16 @@
   "name": "react-native-awesome-sdk",
   "version": "0.1.0",
   "description": "A boilerplate React Native native module for wrapping any third-party iOS/Android SDK.",
-  "main": "./lib/module/index.js",
-  "types": "./lib/typescript/src/index.d.ts",
+  "main": "./src/index.ts",
+  "react-native": "./src/index.ts",
+  "types": "./src/index.ts",
+  "podspec": "ios/react-native-awesome-sdk.podspec",
   "exports": {
     ".": {
-      "source": "./src/index.tsx",
-      "types": "./lib/typescript/src/index.d.ts",
-      "default": "./lib/module/index.js"
+      "react-native": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./package.json": "./package.json"
   },
@@ -32,7 +35,8 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-awesome-sdk-example",
+    "bootstrap": "yarn install && cd example && rm -rf node_modules yarn.lock package-lock.json && yarn install && cd ios && pod install --repo-update && cd ../..",
+    "example": "yarn workspace react-native-awesome-sdk-example start",
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -65,11 +69,12 @@
     "@eslint/js": "^9.22.0",
     "@evilmartians/lefthook": "^1.5.0",
     "@react-native-community/cli": "15.0.0-alpha.2",
-    "@react-native/babel-preset": "0.81.0",
+    "@react-native/babel-preset": "^0.77.0",
     "@react-native/eslint-config": "^0.78.0",
     "@release-it/conventional-changelog": "^9.0.2",
     "@types/jest": "^29.5.5",
     "@types/react": "^19.1.0",
+    "@types/react-native": "^0.72.8",
     "commitlint": "^19.6.1",
     "del-cli": "^5.1.0",
     "eslint": "^9.22.0",
@@ -77,21 +82,27 @@
     "eslint-plugin-prettier": "^5.2.3",
     "jest": "^29.7.0",
     "prettier": "^3.0.3",
-    "react": "19.1.0",
-    "react-native": "0.81.0",
     "react-native-builder-bob": "^0.40.13",
-    "release-it": "^17.10.0",
+    "release-it": "^19.0.4",
     "turbo": "^1.10.7",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-native": "*"
+    "react": ">=18.0.0",
+    "react-native": ">=0.70.0"
   },
   "workspaces": [
+    ".",
     "example"
   ],
   "packageManager": "yarn@3.6.1",
+  "resolutions": {
+    "metro": "0.77.0",
+    "metro-config": "0.77.0",
+    "metro-runtime": "0.77.0",
+    "metro-resolver": "0.77.0",
+    "@react-native/metro-config": "0.77.3"
+  },
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [

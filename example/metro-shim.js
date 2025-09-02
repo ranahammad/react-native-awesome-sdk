@@ -1,6 +1,15 @@
-// example/metro.config.js
-// example/metro.config.js
-module.exports = require('./metro-shim');
+const { getDefaultConfig } = require('@react-native/metro-config');
+
+// Metro CLI sometimes expects a promise, sometimes an object.
+// This shim ensures compatibility either way.
+async function loadConfig() {
+  return await getDefaultConfig(__dirname);
+}
+
+// Export both: Promise (newer style) and plain object (older style)
+module.exports = loadConfig();
+module.exports.loadConfig = loadConfig; // For Metro CLI compatibility
+
 // This file simply re-exports the shim to ensure Metro uses the correct configuration.
 // If you encounter issues with Metro bundler, consider the following steps:
 

@@ -1,33 +1,25 @@
-package com.awesomesdk
+package com.awesomesdk;
 
-import com.facebook.react.BaseReactPackage
-import com.facebook.react.bridge.NativeModule
-import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.module.model.ReactModuleInfo
-import com.facebook.react.module.model.ReactModuleInfoProvider
-import java.util.HashMap
+import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.NativeModule;
+import com.facebook.react.uimanager.ViewManager;
+import com.facebook.react.bridge.ReactApplicationContext;
 
-class AwesomeSdkPackage : BaseReactPackage() {
-  override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
-    return if (name == AwesomeSdkModule.NAME) {
-      AwesomeSdkModule(reactContext)
-    } else {
-      null
-    }
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class AwesomeSdkPackage implements ReactPackage {
+
+  @Override
+  public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+    List<NativeModule> modules = new ArrayList<>();
+    modules.add(new AwesomeSdkModule(reactContext));
+    return modules;
   }
 
-  override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
-    return ReactModuleInfoProvider {
-      val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
-      moduleInfos[AwesomeSdkModule.NAME] = ReactModuleInfo(
-        AwesomeSdkModule.NAME,
-        AwesomeSdkModule.NAME,
-        false,  // canOverrideExistingModule
-        false,  // needsEagerInit
-        false,  // isCxxModule
-        true // isTurboModule
-      )
-      moduleInfos
-    }
+  @Override
+  public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
+    return Collections.emptyList();
   }
 }
